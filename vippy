@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-var VippyConfig = require('./lib/VippyConfig.js'),
-    VippyManager = require('./lib/VippyManager.js'),
+var VippyConfig = require('./lib/VippyConfig'),
+    VippyManager = require('./lib/VippyManager'),
+    VippyNetwork = require('./lib/VippyNetwork'),
     os = require('os'),
     hostname = os.hostname(),
     config_file = 'vippy.conf';
@@ -30,12 +31,7 @@ for(var i=2; i<process.argv.length; i++) {
 
 
 var config = new VippyConfig(config_file, hostname),
-    manager = new VippyManager(config, hostname);
-
-config.on('ignore', function(reason, payload) {
-  console.log("dropping announcement from " + payload.me + ", bad " + reason);
-});
-manager.on('up', function(iface) { console.log("up", iface); });
-manager.on('down', function(iface) { console.log("down", iface); });
+    manager = new VippyManager(config),
+    network = new VippyNetwork(config, manager);
 
 config.run();
