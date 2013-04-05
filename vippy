@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+var VippyConfig = require('./lib/VippyConfig.js'),
+    VippyManager = require('./lib/VippyManager.js'),
+    os = require('os'),
+    hostname = os.hostname(),
+    config_file = 'vippy.conf';
+
+function usage(error) {
+  if(error) console.log("Error: " + error + "\n");
+  console.log(process.argv[1] + ":");
+  console.log("\t-h");
+  console.log("\t-n <node>");
+  console.log("\t-c <config file>");
+  process.exit(error ? -1 : 0);
+}
+for(var i=2; i<process.argv.length; i++) {
+  if(process.argv[i] == "-h") {
+    usage();
+  }
+  else if(process.argv[i] == "-c") {
+    if(process.argv.length < i+1) usage("-c requires and argument");
+    config_file = process.argv[++i];
+  }
+  else if(process.argv[i] == "-n") {
+    if(process.argv.length < i+1) usage("-n requires and argument");
+    hostname = process.argv[++i];
+  }
+  else usage("bad arguments");
+}
+
+
+var config = new VippyConfig(config_file, hostname),
+    manager = new VippyManager(config, hostname);
+
+config.on('ignore', function(reason, payload) {
+  console.log("dropping announcement from " + payload.me + ", bad " + reason);
+});
+manager.on('up', function(iface) { console.log("up", iface); });
+manager.on('down', function(iface) { console.log("down", iface); });
+
+config.run();
