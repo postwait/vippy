@@ -1,0 +1,23 @@
+{ "name" : "vippy"
+, "description" : "Virtual IP Management and Failover"
+, "keywords" : [ "vip", "ha" ]
+, "version" : "0.0.1"
+, "preferGlobal" : true
+, "author" : { "name" : "Theo Schlossnagle" }
+, "repository" :
+  { "type" : "git"
+  , "url" : "git://github.com/postwait/vippy.git"
+  }
+, "bugs" :
+  { "url" : "http://github.com/postwait/vippy/issues"
+  }
+, "main" : "./index"
+, "bin": { "vippyd": "./vippyd.js" }
+, "dependencies" : { "ife": ">0.0.0" }
+, "engines" : { "node" : "0.4 || 0.5 || 0.6 || 0.8 || 0.10" }
+, "licenses" :
+  [ { "type" : "BSD"
+    , "url" : "http://github.com/postwait/vippy/raw/master/vippy"
+    }
+  ]
+}

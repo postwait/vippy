@@ -30,9 +30,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-var VippyConfig = require('./lib/VippyConfig'),
-    VippyManager = require('./lib/VippyManager'),
-    VippyNetwork = require('./lib/VippyNetwork'),
+var vippy = require('vippy'),
     os = require('os'),
     hostname = os.hostname(),
     config_file = 'vippy.conf';
@@ -61,8 +59,8 @@ for(var i=2; i<process.argv.length; i++) {
 }
 
 
-var config = new VippyConfig(config_file, hostname),
-    manager = new VippyManager(config),
-    network = new VippyNetwork(config, manager);
+var config = new vippy.Config(config_file, hostname),
+    manager = new vippy.Manager(config),
+    network = new vippy.Network(config, manager);
 
 config.run();
