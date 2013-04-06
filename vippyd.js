@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
-Copyright (c) 2007,2008, OmniTI Computer Consulting, Inc.
+Copyright (c) 2013, OmniTI Computer Consulting, Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
