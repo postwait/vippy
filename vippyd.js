@@ -69,7 +69,8 @@ for(var i=2; i<process.argv.length; i++) {
 
 var config = new vippy.Config(config_file, hostname),
     manager = new vippy.Manager(config),
-    network = new vippy.Network(config, manager);
+    network = new vippy.Network(config, manager),
+    controller = new vippy.Controller(config, manager);
 
 plugins.forEach(function(file) {
   fs.readFile(file, 'utf8', function(err, data) {
