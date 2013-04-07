@@ -32,8 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 var vippy = require('vippy'),
     os = require('os'),
+    fs = require('fs'),
+    vm = require('vm'),
     hostname = os.hostname(),
-    config_file = 'vippy.conf';
+    config_file = 'vippy.conf',
+    plugins = [];
 
 function usage(error) {
   if(error) console.log("Error: " + error + "\n");
@@ -41,6 +44,7 @@ function usage(error) {
   console.log("\t-h");
   console.log("\t-n <node>");
   console.log("\t-c <config file>");
+  console.log("\t-p <plugin file>");
   process.exit(error ? -1 : 0);
 }
 for(var i=2; i<process.argv.length; i++) {
@@ -55,6 +59,10 @@ for(var i=2; i<process.argv.length; i++) {
     if(process.argv.length < i+1) usage("-n requires and argument");
     hostname = process.argv[++i];
   }
+  else if(process.argv[i] == "-p") {
+    if(process.argv.length < i+1) usage("-p requires and argument");
+    plugins.push(process.argv[++i]);
+  }
   else usage("bad arguments");
 }
 
@@ -62,5 +70,26 @@ for(var i=2; i<process.argv.length; i++) {
 var config = new vippy.Config(config_file, hostname),
     manager = new vippy.Manager(config),
     network = new vippy.Network(config, manager);
+
+plugins.forEach(function(file) {
+  fs.readFile(file, 'utf8', function(err, data) {
+    if(err) {
+      config.log('err', 'Cannot read file '+file+': '+err);
+      process.exit(-1);
+    }
+    var sandbox = vm.createContext({});
+    for (var k in global) sandbox[k] = global[k];
+    sandbox.global = sandbox;
+    sandbox.config = config;
+    sandbox.manager = manager
+    sandbox.network = network;
+    try {
+      vm.runInNewContext(data, sandbox, file);
+    }
+    catch(e) {
+      config.log('err', e.stack);
+    }
+  });
+});
 
 config.run();
