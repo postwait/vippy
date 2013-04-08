@@ -72,8 +72,8 @@ function prettyVIF(vif) {
 function statusOutput(info) {
   if(info.state && info.config) {
     var s = info.state, c = info.config, vifown = {};
-    console.log("State: ",
-                (!s.mature) ? "booting" : s.active ? "active" : "inactive");
+    console.log("State:  " + (s.active ? "active" : "inactive"));
+    if(!s.active) console.log("Reason: " + s.inactive_reason);
     for (var owner in s.ownership) {
       s.ownership[owner].forEach(function (vif) {
         vifown[prettyVIF(vif)] = (owner == "_") ? '(unowned)' : owner;
