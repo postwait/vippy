@@ -35,7 +35,7 @@ var vippy = require('vippy'),
     fs = require('fs'),
     vm = require('vm'),
     hostname = os.hostname(),
-    config_file = 'vippy.conf',
+    config_file = '/etc/vippy.conf',
     plugins = [];
 
 function usage(error) {
@@ -66,6 +66,13 @@ for(var i=2; i<process.argv.length; i++) {
   else usage("bad arguments");
 }
 
+try {
+  var sb = fs.statSync(config_file);
+  if(!sb.isFile()) throw new Error("no such file '" + config_file + "'");
+} catch (e) {
+  console.log("config error: " + e);
+  process.exit(-1);
+}
 
 var config = new vippy.Config(config_file, hostname),
     manager = new vippy.Manager(config),

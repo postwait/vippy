@@ -33,12 +33,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 var http = require('http'),
     util = require('util'),
+    fs = require('fs'),
     socketPath = '/var/run/vippy.socket',
     cmd = process.argv[2];
 
 if(cmd == '-s') {
   socketPath=process.argv[3];
   cmd = process.argv[4];
+}
+
+try {
+  var sb = fs.statSync(socketPath);
+  if(!sb.isSocket()) throw new Error("is not a socket '" + socketPath +"'");
+} catch(e) {
+  console.log("control socket: " + e);
+  process.exit(-1);
 }
 
 function runCmd(cmd, handler) {
