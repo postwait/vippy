@@ -1,7 +1,7 @@
 { "name" : "vippy"
 , "description" : "Virtual IP Management and Failover"
 , "keywords" : [ "vip", "ha" ]
-, "version" : "0.0.3"
+, "version" : "0.0.4"
 , "preferGlobal" : true
 , "author" : { "name" : "Theo Schlossnagle" }
 , "repository" :
