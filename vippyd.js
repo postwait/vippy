@@ -87,6 +87,7 @@ plugins.forEach(function(file) {
     }
     var sandbox = vm.createContext({});
     for (var k in global) sandbox[k] = global[k];
+    sandbox.require = require;
     sandbox.global = sandbox;
     sandbox.config = config;
     sandbox.manager = manager
