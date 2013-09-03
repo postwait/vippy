@@ -79,7 +79,10 @@ var config = new vippy.Config(config_file, hostname),
     network = new vippy.Network(config, manager),
     controller = new vippy.Controller(config, manager);
 
-plugins.forEach(function(file) {
+
+plugins.forEach(function(file) { config.add_plugin(file); });
+
+config.plugins().forEach(function(file) {
   fs.readFile(file, 'utf8', function(err, data) {
     if(err) {
       config.log('err', 'Cannot read file '+file+': '+err);
