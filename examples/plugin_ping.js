@@ -32,6 +32,7 @@ var pingInterval = setInterval(function () {
         config.log('debug', config.inactive_reason());
       }
     });
+    session.close();
   }
 }, 1000);
 config.on('stop', function () {
