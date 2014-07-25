@@ -6,6 +6,7 @@ Vippy will manage a set of (M) IP addresses over a set of (N) nodes.  It uses IP
 
     {
       "chat": "224.1.1.1:5007",
+      "chat_interface": "all",
       "secret": "knsdfkjnsdfkjnweroib0u3",
       "version": 5,
       "vips": [
