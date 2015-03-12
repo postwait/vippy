@@ -73,7 +73,7 @@ function IP2nm(ip) {
 }
 function prettyVIF(vif) {
   var out = vif.filter(function(x) { return typeof(x) === "object"; })
-               .map(function(v) { return v.ip + "/" + IP2nm(v.netmask); })
+               .map(function(v) { return v.hasOwnProperty("netmask") ? v.ip + "/" + IP2nm(v.netmask) : v.ip; })
                .join(" ");
   if(typeof(vif[0]) === "string") return out + " P(" + vif[0] + ")";
   return out;
