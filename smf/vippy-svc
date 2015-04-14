@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# Instructions:
+# 1. place this script to /opt/local/sbin
+# 2. copy vippy.xml to /var/svc/manifest/network/ha/vippy.xml
+# 3. import the manifest with svccs import /var/svc/manifest/network/ha/vippy.xml
+#
+# Optionally if required the nodename can be specified via /opt/local/etc/vippy.node
+
+export PATH=/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin
+
+socket="/var/run/vippy.socket"
+name="/opt/local/etc/vippy.node"
+conf="/opt/local/etc/vippy.conf"
+
+if [ -e /opt/local/etc/vippy.node ] ; then
+    node=$(cat $name)
+    start_cmd="vippyd -c $conf -n $node"
+else
+    start_cmd="vippyd -c $conf"
+fi
+    
+case $1 in
+    start)
+       if [ ! -e $socket ] ; then 
+           $start_cmd &
+           exit 0
+       else
+           echo "ERROR: vippy $socket found, exiting.."
+           exit 1
+       fi
+    ;;
+    stop)
+       pkill -2 -f .*vippy.* && rm -f $socket
+    ;;
+esac

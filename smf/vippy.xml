@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<service_bundle
+    type="manifest"
+    name="vippy">
+    <service
+        name="network/ha/vippy"
+        type="service"
+        version="1">
+        <create_default_instance enabled="false" />
+        <single_instance />
+        <exec_method
+            type="method"
+            name="start"
+            exec="/opt/local/sbin/vippy-svc start"
+            timeout_seconds="30">
+            <method_context working_directory="/opt/local">
+                <method_credential
+                    user="root"
+                    group="root"
+                    privileges="BASIC,PRIV_NET_PRIVADDR" />
+            </method_context>
+        </exec_method>
+        <exec_method
+            type="method"
+            name="stop"
+            exec="/opt/local/sbin/vippy-svc stop"
+            timeout_seconds="60">
+            <method_context working_directory="/opt/local">
+                <method_credential
+                    user="root"
+                    group="root" />
+            </method_context>
+        </exec_method>
+        <stability value="Unstable" />
+        <template>
+            <common_name>
+                <loctext xml:lang="C">vippy</loctext>
+            </common_name>
+        </template>
+    </service>
+</service_bundle>
