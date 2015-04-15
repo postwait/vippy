@@ -18,7 +18,7 @@
                 <method_credential
                     user="root"
                     group="root"
-                    privileges="BASIC,PRIV_NET_PRIVADDR" />
+                    privileges="basic,net_privaddr,sys_ip_config" />
             </method_context>
         </exec_method>
         <exec_method
