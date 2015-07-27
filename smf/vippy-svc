@@ -1,9 +1,9 @@
 #!/bin/sh
 #
 # Instructions:
-# 1. place this script to /opt/local/sbin
+# 1. copy this script into /opt/local/sbin
 # 2. copy vippy.xml to /var/svc/manifest/network/ha/vippy.xml
-# 3. import the manifest with svccs import /var/svc/manifest/network/ha/vippy.xml
+# 3. import the manifest with svccfg import /var/svc/manifest/network/ha/vippy.xml
 #
 # Optionally if required the nodename can be specified via /opt/local/etc/vippy.node
 
